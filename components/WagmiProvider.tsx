@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { SequenceConnector } from '@0xsequence/wagmi-connector'
 import { configureChains, createClient, WagmiConfig } from 'wagmi';

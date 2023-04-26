@@ -1,3 +1,6 @@
+"use client"
+// NOTE: "use client" is only necessary above for using the design system in this component
+
 import { Box, Button, Text } from '@0xsequence/design-system'
 import { sequence } from '0xsequence'
 import ethers from 'ethers'
