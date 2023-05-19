@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SequenceConnector } from '@0xsequence/wagmi-connector'
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
@@ -30,8 +30,11 @@ const connectors = [
   }),
 ]
 
+// wagmi client setup. Note: we do not auto-connect here, but instead
+// do it when the component mounts to prevent hydration issues with wagmi +
+// next.js SSR. This is a common quirk with next+wagmi.
 const wagmiClient = createClient({
-  autoConnect: true,
+  autoConnect: false,
   connectors,
   provider,
   webSocketProvider,
@@ -42,6 +45,12 @@ interface WagmiProviderProps {
 }
 
 function WagmiProvider({ children }: WagmiProviderProps) {
+
+  // auto-connect on mount
+  useEffect(() => {
+    wagmiClient.autoConnect()
+  }, [])
+
   return (
     <WagmiConfig client={wagmiClient}>
       {children}
